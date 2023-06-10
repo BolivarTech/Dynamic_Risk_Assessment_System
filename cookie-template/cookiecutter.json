@@ -1,0 +1,10 @@
+{
+	"step_name": "step_name",
+	"script_name": "main.py",
+	"job_type": "my_step",
+	"short_description": "ML pipeline step",
+	"long_description": "Machine Learning Pipeline Step",
+	"parameters": "parameter1,parameter2",
+	"author_name": "Julian Bolivar",
+    "version": "1.0.0"
+}

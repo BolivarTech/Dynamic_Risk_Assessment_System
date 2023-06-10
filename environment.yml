@@ -1,0 +1,57 @@
+##########################
+# Versions updated to last on conda-forge and pypi
+# Author: Julian Bolivar
+# Date: 2023-06-07
+# Version: 1.1.0
+##########################
+name: risk_pipeline
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+# main system packets
+  - python=3.8.16
+  - mlflow=2.4.0
+  - hydra-core=1.3.2
+  - cookiecutter=2.1.1
+  - dvc=2.58.1
+# data science packets
+  - numpy=1.24.3
+  - pandas=2.0.1
+  - scikit-learn=1.2.2
+  - scipy=1.10.1
+  - matplotlib=3.7.1
+  - pillow=9.5.0
+# Test Driven Developmnet (TDD)
+  - pytest=7.3.1
+# Style enforcement packets
+  - flake8=6.0.0
+  - pylint=2.17.4
+  - autopep8=2.0.2
+# Packets managment and version control
+  - git>=2.40.1
+  - pip>=23.1.2
+# API managment packets
+  - fastapi=0.95.2
+  - flask=2.3.2
+  - requests=2.31.0
+# misselanues packets
+  - threadpoolctl=3.1.0
+  - uvicorn=0.22.0
+  - gunicorn=20.1.0
+  - httpx=0.24.1
+# --------------------- 
+  - click=8.1.3
+  - cycler=0.11.0
+  - itsdangerous=2.1.2
+  - jinja2=3.1.2
+  - joblib=1.2.0
+  - kiwisolver=1.4.4
+  - markupsafe=2.1.3
+  - pyparsing=3.0.9
+  - python-dateutil=2.8.2
+  - pytz=2023.3
+  - seaborn=0.12.2
+  - six=1.16.0
+  - Werkzeug=2.3.4
+  
