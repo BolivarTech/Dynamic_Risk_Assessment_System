@@ -54,4 +54,6 @@ dependencies:
   - seaborn=0.12.2
   - six=1.16.0
   - Werkzeug=2.3.4
-  
+# PIP Dependencies
+  - pip: 
+      - hydra-joblib-launcher==1.2.0
