@@ -1,0 +1,15 @@
+##########################
+# Versions updated to last on conda-forge and pypi
+# Author: Julian Bolivar
+# Date: 2023-06-11
+# Version: 1.0.0
+##########################
+name: {{cookiecutter.step_name}}
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+# main system packets
+  - python=3.8.16
+  - mlflow=2.4.0
+  - pip>=23.1.2
