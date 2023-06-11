@@ -1,7 +1,7 @@
 {
 	"step_name": "step_name",
 	"script_name": "main.py",
-	"job_type": "my_step",
+	"job_type": "ml_pipe_step",
 	"short_description": "ML pipeline step",
 	"long_description": "Machine Learning Pipeline Step",
 	"parameters": "parameter1,parameter2",
