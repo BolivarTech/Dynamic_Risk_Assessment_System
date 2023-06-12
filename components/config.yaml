@@ -1,0 +1,9 @@
+ingestion:
+    input_folder_path: ../practicedata
+    output_folder_path: ../ingesteddata
+diagnostics:
+    test_data_path: ../testdata
+training:
+    output_model_path: ../practicemodels
+production:
+    prod_deployment_path: ../production_deployment

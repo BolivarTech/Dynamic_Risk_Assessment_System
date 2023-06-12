@@ -1,0 +1,17 @@
+name: ingestion
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+      input_path:
+        description: "Path from where the data is ingested into the pipeline"
+        type: path
+        default: ./practicedata
+      out_file:
+        description: "File where the prepocessed data is stored"
+        type: string
+        default: ./finaldata.csv
+
+    command: >-
+        python ingestion.py  -i {input_path} -o {out_file} 
