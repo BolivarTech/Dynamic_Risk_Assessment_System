@@ -1,3 +1,9 @@
+##########################
+# MLflow pipeline data ingestion step
+# Author: Julian Bolivar
+# Date: 2023-06-12
+# Version: 1.0.0
+##########################
 name: ingestion
 conda_env: conda.yml
 
@@ -12,6 +18,10 @@ entry_points:
         description: "File where the prepocessed data is stored"
         type: string
         default: ./finaldata.csv
+      record_file:
+        description: "File where are processed files' names are recorded"
+        type: string
+        default: ./ingestedfiles.txt
 
     command: >-
-        python ingestion.py  -i {input_path} -o {out_file} 
+        python ingestion.py -i {input_path} -o {out_file} -r {record_file}  

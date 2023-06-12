@@ -7,7 +7,8 @@ entry_points:
 {% for arg_name in cookiecutter.parameters.split(",") %}
       {{arg_name}}:
         description: ## ADD DESCRIPTION
-        type: string
+        type: # string, float, path, uri
+        default: # DEFAULT VALUE HERE
 {% endfor %}
 
     command: >-

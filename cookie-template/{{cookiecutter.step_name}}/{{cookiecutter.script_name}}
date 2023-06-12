@@ -48,9 +48,9 @@ def build_argparser():
 
 def main(args):
     """
-     Run the main function
+    Run the main function
 
-     args: command line arguments
+    args: command line arguments
     """
 
     global LOGGER
