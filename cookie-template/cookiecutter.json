@@ -6,5 +6,6 @@
 	"long_description": "Machine Learning Pipeline Step",
 	"parameters": "parameter1,parameter2",
 	"author_name": "Julian Bolivar",
-    "version": "1.0.0"
+    "version": "1.0.0",
+	"date": "{% now 'local', '%Y-%m-%d' %}"
 }

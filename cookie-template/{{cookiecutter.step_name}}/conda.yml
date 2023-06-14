@@ -1,8 +1,8 @@
 ##########################
-# Versions updated to last on conda-forge and pypi
-# Author: Julian Bolivar
-# Date: 2023-06-11
-# Version: 1.0.0
+# Conda environment for {{cookiecutter.step_name}}
+# Author: {{cookiecutter.author_name}}
+# Date: {{cookiecutter.date}}
+# Version: {{cookiecutter.version}}
 ##########################
 name: {{cookiecutter.step_name}}
 channels:

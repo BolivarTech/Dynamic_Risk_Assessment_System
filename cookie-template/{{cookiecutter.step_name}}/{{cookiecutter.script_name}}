@@ -5,8 +5,8 @@
 
 By: {{cookiecutter.author_name}}
 Version: {{cookiecutter.version}}
-Date:  ## Set Release Date Here  ##
-Revision {{cookiecutter.version}} ( ## Set Release Date ## ): Initial Release
+Date:  {{cookiecutter.date}}
+Revision {{cookiecutter.version}} ({{cookiecutter.date}}): Initial Release
 """
 
 # Main System Imports
