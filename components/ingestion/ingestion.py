@@ -112,9 +112,8 @@ def merge_multiple_dataframe(files_to_ingest, args):
     LOGGER.info(f"Cleaned Data File: {args.output_file} (002)")
 
     if conn is not None:
-        #finaldata.to_csv(args.output_file, index=False)
         try: 
-            # write dataset to the data base file
+            # write dataset to the database file
             finaldata.to_sql("ingested_data", conn, if_exists="replace", index=False)
             LOGGER.info(f"Ingested Data created into {args.output_file} (002)")
             # get current time
@@ -122,6 +121,7 @@ def merge_multiple_dataframe(files_to_ingest, args):
             # Create Ingested Files Data Frame
             ingestedfiles_df = pd.DataFrame(list(zip([now]*len(ingestedfiles),ingestedfiles)))
             ingestedfiles_df.columns = ['date', 'file']
+            # Save ingested files to database
             ingestedfiles_df.to_sql("ingested_files", conn, if_exists="replace", index=False)
             LOGGER.info(f"Ingested Files created into {args.output_file} (002)")
     
@@ -139,6 +139,13 @@ def merge_multiple_dataframe(files_to_ingest, args):
             LOGGER.debug(f"Connection Closed (001)")
     else:
         LOGGER.error(f"Can't connect with {args.output_file} (002)")
+
+    # save data on plain csv file
+    file_name = os.path.basename(args.output_file).split('.', 1)[0]
+    file_name = file_name + '.csv' 
+    file_path = os.path.dirname(args.output_file)
+    file_csv = os.path.join(file_path, file_name)
+    finaldata.to_csv(file_csv, index=False)
 
     # save ingested files on plain text file
     with open(args.record_file, 'w') as file:
