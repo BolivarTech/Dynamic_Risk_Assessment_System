@@ -16,11 +16,11 @@ entry_points:
         type: # string, float, path, uri
         default: # DEFAULT VALUE HERE
 
-       data_test_path:
+      data_test_path:
         description: ## ADD DESCRIPTION
         type: # string, float, path, uri
         default: # DEFAULT VALUE HERE
 
 
     command: >-
-        python scoring.py  --model_path {model_path}  -- data_test_path { data_test_path} 
+        python scoring.py  --model_path {model_path}  -- data_test_path {data_test_path} 

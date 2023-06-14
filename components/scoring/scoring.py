@@ -34,7 +34,7 @@ def build_argparser():
                             description="Model Scoring")
 
 
-    parser.add_argument(
+    parser.add_argument("-m",
         "--model_path", 
         type=## INSERT TYPE HERE: str, float or int,
         help=## INSERT DESCRIPTION HERE,
@@ -42,8 +42,8 @@ def build_argparser():
         required=True
     )
 
-    parser.add_argument(
-        "-- data_test_path", 
+    parser.add_argument("-t",
+        "--data_test_path", 
         type=## INSERT TYPE HERE: str, float or int,
         help=## INSERT DESCRIPTION HERE,
         default=## INSERT DEFAULT VALUE HERE,

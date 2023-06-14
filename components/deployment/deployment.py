@@ -32,24 +32,20 @@ def build_argparser():
 
     parser = ArgumentParser(prog="deployment",
                             description="Model Deployment")
-
-
-    parser.add_argument(
+    parser.add_argument("-m",
         "--model_path", 
         type=## INSERT TYPE HERE: str, float or int,
         help=## INSERT DESCRIPTION HERE,
         default=## INSERT DEFAULT VALUE HERE,
         required=True
     )
-
-    parser.add_argument(
-        "-- deploy_path", 
+    parser.add_argument("-d",
+        "--deploy_path", 
         type=## INSERT TYPE HERE: str, float or int,
         help=## INSERT DESCRIPTION HERE,
         default=## INSERT DEFAULT VALUE HERE,
         required=True
     )
-
 
     return parser.parse_args()
 

@@ -1,5 +1,5 @@
 ##########################
-# Conda environment for {{cookiecutter.step_name}}
+# Conda environment for {{cookiecutter.step_name}} step
 # Author: {{cookiecutter.author_name}}
 # Date: {{cookiecutter.date}}
 # Version: {{cookiecutter.version}}
