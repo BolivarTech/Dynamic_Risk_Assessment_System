@@ -1,0 +1,26 @@
+##########################
+# MLflow pipeline scoring step
+# Author: Julian Bolivar
+# Date: 2023-06-14
+# Version: 1.0.0
+##########################
+name: scoring
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      model_path:
+        description: ## ADD DESCRIPTION
+        type: # string, float, path, uri
+        default: # DEFAULT VALUE HERE
+
+       data_test_path:
+        description: ## ADD DESCRIPTION
+        type: # string, float, path, uri
+        default: # DEFAULT VALUE HERE
+
+
+    command: >-
+        python scoring.py  --model_path {model_path}  -- data_test_path { data_test_path} 

@@ -1,0 +1,26 @@
+##########################
+# MLflow pipeline deployment step
+# Author: Julian Bolivar
+# Date: 2023-06-14
+# Version: 1.0.0
+##########################
+name: deployment
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      model_path:
+        description: ## ADD DESCRIPTION
+        type: # string, float, path, uri
+        default: # DEFAULT VALUE HERE
+
+       deploy_path:
+        description: ## ADD DESCRIPTION
+        type: # string, float, path, uri
+        default: # DEFAULT VALUE HERE
+
+
+    command: >-
+        python deployment.py  --model_path {model_path}  -- deploy_path { deploy_path} 
