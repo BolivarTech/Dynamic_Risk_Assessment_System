@@ -52,14 +52,21 @@ def build_argparser():
                         "--output_file",
                         type=str,
                         help="File where the prepocessed data is stored",
-                        default='./finaldata.sqlite',
+                        default='./finaldata.csv',
                         required=False
                         )
     parser.add_argument("-r",
                         "--record_file",
                         type=str,
-                        help="File where the prepocessed data is stored",
+                        help="File where the ingested files names are recorded",
                         default='./ingestedfiles.txt',
+                        required=False
+                        )
+    parser.add_argument("-d",
+                        "--db_file",
+                        type=str,
+                        help="File where db were the pipeline data is stored",
+                        default='./pipeline_data.sqlite',
                         required=False
                         )
 
@@ -108,14 +115,14 @@ def merge_multiple_dataframe(files_to_ingest, args):
     LOGGER.info(f"Duplicated Removed: {org_length-after_length} (001)")
 
     #connect to a database, creating it if it doesn't exist 
-    conn = db.connect(args.output_file)
-    LOGGER.info(f"Cleaned Data File: {args.output_file} (002)")
+    conn = db.connect(args.db_file)
+    LOGGER.info(f"Database Data File: {args.db_file} (002)")
 
     if conn is not None:
         try: 
             # write dataset to the database file
             finaldata.to_sql("ingested_data", conn, if_exists="replace", index=False)
-            LOGGER.info(f"Ingested Data created into {args.output_file} (002)")
+            LOGGER.info(f"Ingested Data table created into {args.db_file} (002)")
             # get current time
             now = dt.now().strftime("%Y-%m-%d %H:%M:%S")
             # Create Ingested Files Data Frame
@@ -123,12 +130,12 @@ def merge_multiple_dataframe(files_to_ingest, args):
             ingestedfiles_df.columns = ['date', 'file']
             # Save ingested files to database
             ingestedfiles_df.to_sql("ingested_files", conn, if_exists="replace", index=False)
-            LOGGER.info(f"Ingested Files created into {args.output_file} (002)")
+            LOGGER.info(f"Ingested Files table created into {args.db_file} (002)")
     
         except ValueError:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't create table 'ingested_data' in {args.output_file} (002)")
+            LOGGER.error(f"Can't create table 'ingested_data' in {args.db_file} (002)")
         else:
             # commit the transaction
             conn.commit()
@@ -141,11 +148,12 @@ def merge_multiple_dataframe(files_to_ingest, args):
         LOGGER.error(f"Can't connect with {args.output_file} (002)")
 
     # save data on plain csv file
-    file_name = os.path.basename(args.output_file).split('.', 1)[0]
-    file_name = file_name + '.csv' 
-    file_path = os.path.dirname(args.output_file)
-    file_csv = os.path.join(file_path, file_name)
-    finaldata.to_csv(file_csv, index=False)
+    # file_name = os.path.basename(args.output_file).split('.', 1)[0]
+    # file_name = file_name + '.csv' 
+    # file_path = os.path.dirname(args.output_file)
+    # file_csv = os.path.join(file_path, file_name)
+    finaldata.to_csv(args.output_file, index=False)
+    LOGGER.info(f"Cleaned Data File: {args.output_file} (002)")
 
     # save ingested files on plain text file
     with open(args.record_file, 'w') as file:

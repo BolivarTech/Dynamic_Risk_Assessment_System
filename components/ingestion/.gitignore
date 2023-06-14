@@ -1,4 +1,4 @@
 log/
 finaldata.csv
-finaldata.sqlite
+pipeline_data.sqlite
 ingestedfiles.txt

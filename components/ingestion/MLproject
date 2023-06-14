@@ -17,11 +17,15 @@ entry_points:
       out_file:
         description: "File where the prepocessed data is stored"
         type: string
-        default: ./finaldata.sqlite
+        default: ./finaldata.csv
       record_file:
-        description: "File where are processed files' names are recorded"
+        description: "File where the ingested files names are recorded"
         type: string
         default: ./ingestedfiles.txt
+      db_file:
+        description: "File where db were the pipeline data is stored"
+        type: string
+        default: ./pipeline_data.sqlite
 
     command: >-
-        python ingestion.py -i {input_path} -o {out_file} -r {record_file}  
+        python ingestion.py -i {input_path} -o {out_file} -r {record_file} -d {db_file}
