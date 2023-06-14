@@ -17,7 +17,7 @@ entry_points:
       out_file:
         description: "File where the prepocessed data is stored"
         type: string
-        default: ./finaldata.csv
+        default: ./finaldata.sqlite
       record_file:
         description: "File where are processed files' names are recorded"
         type: string

@@ -16,9 +16,13 @@ import logging.handlers
 import sys
 import os
 import platform
+from datetime import datetime as dt
 
 # Data Science Imports
 import pandas as pd
+
+# Data Base Imports
+import sqlite3 as db
 
 
 # Main Logger
@@ -48,7 +52,7 @@ def build_argparser():
                         "--output_file",
                         type=str,
                         help="File where the prepocessed data is stored",
-                        default='./finaldata.csv',
+                        default='./finaldata.sqlite',
                         required=False
                         )
     parser.add_argument("-r",
@@ -103,11 +107,40 @@ def merge_multiple_dataframe(files_to_ingest, args):
 
     LOGGER.info(f"Duplicated Removed: {org_length-after_length} (001)")
 
-    # write dataset to an output master file
-    finaldata.to_csv(args.output_file, index=False)
+    #connect to a database, creating it if it doesn't exist 
+    conn = db.connect(args.output_file)
     LOGGER.info(f"Cleaned Data File: {args.output_file} (002)")
 
-    # save ingested files with timestamp
+    if conn is not None:
+        #finaldata.to_csv(args.output_file, index=False)
+        try: 
+            # write dataset to the data base file
+            finaldata.to_sql("ingested_data", conn, if_exists="replace", index=False)
+            LOGGER.info(f"Ingested Data created into {args.output_file} (002)")
+            # get current time
+            now = dt.now().strftime("%Y-%m-%d %H:%M:%S")
+            # Create Ingested Files Data Frame
+            ingestedfiles_df = pd.DataFrame(list(zip([now]*len(ingestedfiles),ingestedfiles)))
+            ingestedfiles_df.columns = ['date', 'file']
+            ingestedfiles_df.to_sql("ingested_files", conn, if_exists="replace", index=False)
+            LOGGER.info(f"Ingested Files created into {args.output_file} (002)")
+    
+        except ValueError:
+            # if exception occour Rollback
+            conn.rollback()
+            LOGGER.error(f"Can't create table 'ingested_data' in {args.output_file} (002)")
+        else:
+            # commit the transaction
+            conn.commit()
+            LOGGER.debug(f"Transactions commited (001)")
+        finally:
+            # close out the connection
+            conn.close()
+            LOGGER.debug(f"Connection Closed (001)")
+    else:
+        LOGGER.error(f"Can't connect with {args.output_file} (002)")
+
+    # save ingested files on plain text file
     with open(args.record_file, 'w') as file:
         file.write(str(ingestedfiles))
 
