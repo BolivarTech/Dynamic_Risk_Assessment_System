@@ -122,7 +122,7 @@ def merge_multiple_dataframe(files_to_ingest, args):
         try: 
             # write dataset to the database file
             finaldata.to_sql("ingested_data", conn, if_exists="replace", index=False)
-            LOGGER.info(f"Ingested Data table created into {args.db_file} (002)")
+            LOGGER.info(f"Ingested Data table created into {args.db_file} (003)")
             # get current time
             now = dt.now().strftime("%Y-%m-%d %H:%M:%S")
             # Create Ingested Files Data Frame
@@ -130,22 +130,22 @@ def merge_multiple_dataframe(files_to_ingest, args):
             ingestedfiles_df.columns = ['date', 'file']
             # Save ingested files to database
             ingestedfiles_df.to_sql("ingested_files", conn, if_exists="replace", index=False)
-            LOGGER.info(f"Ingested Files table created into {args.db_file} (002)")
+            LOGGER.info(f"Ingested Files table created into {args.db_file} (004)")
     
         except ValueError:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't create table 'ingested_data' in {args.db_file} (002)")
+            LOGGER.error(f"Can't create table 'ingested_data' in {args.db_file} (005)")
         else:
             # commit the transaction
             conn.commit()
-            LOGGER.debug(f"Transactions commited (001)")
+            LOGGER.debug(f"Transactions commited (006)")
         finally:
             # close out the connection
             conn.close()
-            LOGGER.debug(f"Connection Closed (001)")
+            LOGGER.debug(f"Connection Closed (007)")
     else:
-        LOGGER.error(f"Can't connect with {args.output_file} (002)")
+        LOGGER.error(f"Can't connect with {args.output_file} (008)")
 
     # save data on plain csv file
     # file_name = os.path.basename(args.output_file).split('.', 1)[0]
@@ -153,7 +153,7 @@ def merge_multiple_dataframe(files_to_ingest, args):
     # file_path = os.path.dirname(args.output_file)
     # file_csv = os.path.join(file_path, file_name)
     finaldata.to_csv(args.output_file, index=False)
-    LOGGER.info(f"Cleaned Data File: {args.output_file} (002)")
+    LOGGER.info(f"Cleaned Data File: {args.output_file} (009)")
 
     # save ingested files on plain text file
     with open(args.record_file, 'w') as file:
@@ -179,7 +179,7 @@ def main(args):
              if os.path.isfile(os.path.join(args.input_path, f))
              and f.endswith(".csv")]
     files_list = "\n".join(files)
-    LOGGER.info(f"Files Found In: {args.input_path} (004)\n{files_list}")
+    LOGGER.info(f"Files Found In: {args.input_path} (010)\n{files_list}")
     # Ingest the files
     merge_multiple_dataframe(files, args)
 
@@ -214,11 +214,11 @@ if __name__ == '__main__':
     if 'LOGHANDLER' in globals():
         LOGGER.addHandler(LOGHANDLER)
     else:
-        LOGGER.debug("logHandler NOT defined (005)")
+        LOGGER.debug("logHandler NOT defined (011)")
     # Set Logger Lever
     LOGGER.setLevel(LOGLEVEL_)
     # Start Running
-    LOGGER.debug("Running... (006)")
+    LOGGER.debug("Running... (012)")
     args = build_argparser()
     main(args)
-    LOGGER.debug("Finished. (007)")
+    LOGGER.debug("Finished. (013)")

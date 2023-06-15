@@ -93,7 +93,7 @@ if __name__ == '__main__':
     # Set Logger Lever
     LOGGER.setLevel(LOGLEVEL_)
     # Start Running
-    LOGGER.debug("Running... (002)")
+    LOGGER.debug("Running... (001)")
     args = build_argparser()
     main(args)
-    LOGGER.debug("Finished. (003)")
+    LOGGER.debug("Finished. (001)")

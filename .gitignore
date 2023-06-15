@@ -1,4 +1,4 @@
 Dynamic_Risk_Assessment_System.code-workspace
 develop_env_commands.txt
 mlruns/
-src-templates/
+src-templates

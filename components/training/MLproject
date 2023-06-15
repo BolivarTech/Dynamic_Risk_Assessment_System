@@ -11,10 +11,10 @@ entry_points:
   main:
     parameters:
 
-      input_path:
-        description: "Data ingested input path"
-        type: path
-        default: ../../db
+      db_file:
+        description: "Data ingested data base"
+        type: string
+        default: ../../db/pipeline_data.sqlite
 
       model_path:
         description: "Model save path"
@@ -23,4 +23,4 @@ entry_points:
 
 
     command: >-
-        python training.py  -i {input_path}  -o {model_path} 
+        python training.py  -i {db_file}  -o {model_path} 
