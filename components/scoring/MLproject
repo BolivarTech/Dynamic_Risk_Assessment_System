@@ -11,16 +11,21 @@ entry_points:
   main:
     parameters:
 
+      db_file:
+        description: "Data ingested data base"
+        type: string
+        default: ../../db/pipeline_data.sqlite
+
       model_path:
-        description: ## ADD DESCRIPTION
-        type: # string, float, path, uri
-        default: # DEFAULT VALUE HERE
+        description: "Model saved path"
+        type: string
+        default: ../../practicemodels
 
       data_test_path:
-        description: ## ADD DESCRIPTION
-        type: # string, float, path, uri
-        default: # DEFAULT VALUE HERE
+        description: "Data test path"
+        type: string
+        default: ../../testdata
 
 
     command: >-
-        python scoring.py  --model_path {model_path}  -- data_test_path {data_test_path} 
+        python scoring.py  -d {db_file} -m {model_path} -t {data_test_path}
