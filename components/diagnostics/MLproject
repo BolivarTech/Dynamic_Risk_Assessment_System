@@ -1,0 +1,31 @@
+##########################
+# MLflow pipeline diagnostics step
+# Author: Julian Bolivar
+# Date: 2023/06/18
+# Version: 1.0.0
+##########################
+name: diagnostics
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      deploy_path:
+        description: "Path to deploymed model"
+        type: string
+        default: ../../production_deployment
+
+      output_path:
+        description: "Path where the report is saved"
+        type: string
+        default: ../../ingesteddata
+
+      db_path:
+        description: "Database path"
+        type: string
+        default: ../../db
+
+
+    command: >-
+        python diagnostics.py -p {deploy_path} -o {output_path} -d {db_path} 
