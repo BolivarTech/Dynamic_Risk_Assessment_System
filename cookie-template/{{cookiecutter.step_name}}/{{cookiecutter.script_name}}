@@ -17,6 +17,9 @@ import sys
 import os
 import platform
 
+# Get the running script's path
+RUNNING_PATH = os.path.realpath(os.path.dirname(__file__)) 
+
 # Main Logger
 LOGHANDLER = None
 LOGGER = None
@@ -38,7 +41,7 @@ def build_argparser():
         "--{{arg_name}}", 
         type=## INSERT TYPE HERE: str, float or int,
         help=## INSERT DESCRIPTION HERE,
-        default=## INSERT DEFAULT VALUE HERE,
+        default=## INSERT DEFAULT VALUE HERE OR os.path.join(RUNNING_PATH,'## RELATIVE PATH ##'),
         required=True
     )
 {% endfor %}
