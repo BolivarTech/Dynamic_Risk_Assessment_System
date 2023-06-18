@@ -26,11 +26,11 @@ import pandas as pd
 # Data Base Imports
 import sqlite3 as db
 
-# adding training directory to the system path
-sys.path.insert(0, '../training')
-
 # Get the running script path
-# os.path.realpath(os.path.dirname(__file__))
+running_path = os.path.realpath(os.path.dirname(__file__)) 
+
+# adding training directory to the system path
+sys.path.insert(0, os.path.join(running_path, '../training'))
 
 # Imports from other libraries
 from training import segregate_dataset
@@ -56,14 +56,14 @@ def build_argparser():
                         "--db_file", 
                         type=str,
                         help="Data ingested database",
-                        default='../../db/pipeline_data.sqlite',
+                        default=os.path.join(running_path,'../../db/pipeline_data.sqlite'),
                         required=False)
     
     parser.add_argument("-m",
         "--model_path", 
         type=str,
         help="Model saved path",
-        default='../../practicemodels',
+        default=os.path.join(running_path,'../../practicemodels'),
         required=False
     )
     
@@ -71,7 +71,7 @@ def build_argparser():
         "--data_test_path", 
         type=str,
         help="Data test path",
-        default='../../testdata',
+        default=os.path.join(running_path,'../../testdata'),
         required=False
     )
 
@@ -118,15 +118,15 @@ def score_model(args):
             # get current time
             now = dt.now().strftime("%Y-%m-%d %H:%M:%S")
             # Create Score Data Frame
-            score_reg = {'date': now, 'score': score}
-            ingestedfiles_df = pd.DataFrame(score_reg)
+            score_reg = {'date': [now,], 'score': [score,]}
+            scores_df = pd.DataFrame(score_reg)
             # Save score record into database
-            ingestedfiles_df.to_sql("model_score", conn, if_exists='append', index=False)
+            scores_df.to_sql("model_score", conn, if_exists='append', index=False)
             LOGGER.info(f"Score recorded in 'model_score' table into {args.db_file} (001)")
-        except ValueError:
+        except ValueError as err:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't update table 'model_score' in {args.db_file} (001)")
+            LOGGER.error(f"Can't update table 'model_score' in {args.db_file} (001)\n{err}")
         else:
             # commit the transaction
             conn.commit()
@@ -170,7 +170,7 @@ if __name__ == '__main__':
             print(error)
             sys.exit(-1)
     LogFileName = os.path.join(loggPath,
-                              computer_name + '-' + SCRIPT_NAME + '.log')
+                                computer_name + '-' + SCRIPT_NAME + '.log')
     # Configure the logger
     LOGGER = log.getLogger(SCRIPT_NAME)  # Get Logger
     # Add the log message file handler to the logger

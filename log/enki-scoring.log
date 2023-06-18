@@ -1,0 +1,4 @@
+2023/06/18 12:43:29 - scoring - INFO: Model /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/scoring/../../practicemodels/trainedmodel.pkl loaded (001)
+2023/06/18 12:43:29 - scoring - INFO: Database Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/scoring/../../db/pipeline_data.sqlite (001)
+2023/06/18 12:51:31 - scoring - INFO: Model /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/scoring/../../practicemodels/trainedmodel.pkl loaded (001)
+2023/06/18 12:51:31 - scoring - INFO: Database Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/scoring/../../db/pipeline_data.sqlite (001)
