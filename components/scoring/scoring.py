@@ -16,6 +16,7 @@ import logging.handlers
 import sys
 import os
 import platform
+from datetime import datetime as dt
 
 # ML imports
 import pickle
@@ -99,6 +100,7 @@ def score_model(args):
     modelpath = os.path.join(args.model_path, 'trainedmodel.pkl')
     with open(modelpath, 'rb') as file:
         model = pickle.load(file)
+        LOGGER.info(f"Model {modelpath} loaded (001)")
 
     # segregate test dataset
     X, y = segregate_dataset(testdata)
@@ -107,10 +109,39 @@ def score_model(args):
     yhat = model.predict(X)
     score = metrics.f1_score(y, yhat)
 
-    # save as latest score
+    # upate score table
+    #connect to a database, creating it if it doesn't exist 
+    conn = db.connect(args.db_file)
+    LOGGER.info(f"Database Data File: {args.db_file} (001)")
+    if conn is not None:
+        try: 
+            # get current time
+            now = dt.now().strftime("%Y-%m-%d %H:%M:%S")
+            # Create Score Data Frame
+            score_reg = {'date': now, 'score': score}
+            ingestedfiles_df = pd.DataFrame(score_reg)
+            # Save score record into database
+            ingestedfiles_df.to_sql("model_score", conn, if_exists='append', index=False)
+            LOGGER.info(f"Score recorded in 'model_score' table into {args.db_file} (001)")
+        except ValueError:
+            # if exception occour Rollback
+            conn.rollback()
+            LOGGER.error(f"Can't update table 'model_score' in {args.db_file} (001)")
+        else:
+            # commit the transaction
+            conn.commit()
+            LOGGER.debug(f"Transactions commited (001)")
+        finally:
+            # close out the connection
+            conn.close()
+            LOGGER.debug(f"Connection Closed (001)")
+    else:
+        LOGGER.error(f"Can't connect with {args.output_file} (001)")
+
+    # save as latest score on file
     scorespath = os.path.join(args.model_path, 'latestscore.txt')
     with open(scorespath, 'w') as file:
-         file.write(str(score))
+        file.write(str(score))
 
 
 def main(args):
