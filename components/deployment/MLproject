@@ -12,15 +12,18 @@ entry_points:
     parameters:
 
       model_path:
-        description: ## ADD DESCRIPTION
-        type: # string, float, path, uri
-        default: # DEFAULT VALUE HERE
-
+        description: "File Model score path"
+        type: string
+        default: ../../practicemodels
+      record_file:
+        description: "File where the ingested files names are recorded"
+        type: string
+        default: ../../ingesteddata/ingestedfiles.txt
       deploy_path:
-        description: ## ADD DESCRIPTION
-        type: # string, float, path, uri
-        default: # DEFAULT VALUE HERE
+        description: "Model Deployment Path"
+        type: string
+        default: ../../production_deployment
 
 
     command: >-
-        python deployment.py  --model_path {model_path}  -- deploy_path {deploy_path} 
+        python deployment.py -m {model_path} -i {record_file} -d {deploy_path} 

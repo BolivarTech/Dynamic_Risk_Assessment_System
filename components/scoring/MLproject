@@ -16,16 +16,16 @@ entry_points:
         type: string
         default: ../../db/pipeline_data.sqlite
 
-      model_path:
-        description: "Model saved path"
+      model_file:
+        description: "Model saved file"
         type: string
-        default: ../../practicemodels
+        default: ../../practicemodels/trainedmodel.pkl
 
-      data_test_path:
-        description: "Data test path"
+      data_test_file:
+        description: "Data test file"
         type: string
-        default: ../../testdata
+        default: ../../testdata/testdata.csv
 
 
     command: >-
-        python scoring.py  -d {db_file} -m {model_path} -t {data_test_path}
+        python scoring.py  -d {db_file} -m {model_file} -t {data_test_file}

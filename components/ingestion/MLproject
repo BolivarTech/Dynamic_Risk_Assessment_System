@@ -12,20 +12,20 @@ entry_points:
     parameters:
       input_path:
         description: "Path from where the data is ingested into the pipeline"
-        type: path
-        default: ./practicedata
+        type: string
+        default: ../../practicedata
       out_file:
         description: "File where the prepocessed data is stored"
         type: string
-        default: ./finaldata.csv
+        default: ../../ingesteddata/finaldata.csv
       record_file:
         description: "File where the ingested files names are recorded"
         type: string
-        default: ./ingestedfiles.txt
+        default: ../../ingesteddata/ingestedfiles.txt
       db_file:
         description: "File where db were the pipeline data is stored"
         type: string
-        default: ./pipeline_data.sqlite
+        default: ../../db/pipeline_data.sqlite
 
     command: >-
         python ingestion.py -i {input_path} -o {out_file} -r {record_file} -d {db_file}

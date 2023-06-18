@@ -27,10 +27,10 @@ import pandas as pd
 import sqlite3 as db
 
 # Get the running script path
-running_path = os.path.realpath(os.path.dirname(__file__)) 
+RUNNING_PATH = os.path.realpath(os.path.dirname(__file__)) 
 
 # adding training directory to the system path
-sys.path.insert(0, os.path.join(running_path, '../training'))
+sys.path.insert(0, os.path.join(RUNNING_PATH, '../training'))
 
 # Imports from other libraries
 from training import segregate_dataset
@@ -56,22 +56,22 @@ def build_argparser():
                         "--db_file", 
                         type=str,
                         help="Data ingested database",
-                        default=os.path.join(running_path,'../../db/pipeline_data.sqlite'),
+                        default=os.path.join(RUNNING_PATH,'../../db/pipeline_data.sqlite'),
                         required=False)
     
     parser.add_argument("-m",
-        "--model_path", 
+        "--model_file", 
         type=str,
-        help="Model saved path",
-        default=os.path.join(running_path,'../../practicemodels'),
+        help="Model saved file",
+        default=os.path.join(RUNNING_PATH,'../../practicemodels/trainedmodel.pkl'),
         required=False
     )
     
     parser.add_argument("-t",
-        "--data_test_path", 
+        "--data_test_file", 
         type=str,
-        help="Data test path",
-        default=os.path.join(running_path,'../../testdata'),
+        help="Data test File",
+        default=os.path.join(RUNNING_PATH,'../../testdata/testdata.csv'),
         required=False
     )
 
@@ -93,14 +93,12 @@ def score_model(args):
     """
 
     # import test dataset from csv file
-    testfile = os.path.join(args.data_test_path, 'testdata.csv')
-    testdata = pd.read_csv(testfile)
+    testdata = pd.read_csv(args.data_test_file)
 
-    # load trained model
-    modelpath = os.path.join(args.model_path, 'trainedmodel.pkl')
-    with open(modelpath, 'rb') as file:
+    # load trained model    
+    with open(args.model_file, 'rb') as file:
         model = pickle.load(file)
-        LOGGER.info(f"Model {modelpath} loaded (001)")
+        LOGGER.info(f"Model {args.model_file} loaded (001)")
 
     # segregate test dataset
     X, y = segregate_dataset(testdata)
@@ -139,7 +137,7 @@ def score_model(args):
         LOGGER.error(f"Can't connect with {args.output_file} (001)")
 
     # save as latest score on file
-    scorespath = os.path.join(args.model_path, 'latestscore.txt')
+    scorespath = os.path.join(os.path.realpath(os.path.dirname(args.model_file)), 'latestscore.txt')
     with open(scorespath, 'w') as file:
         file.write(str(score))
 

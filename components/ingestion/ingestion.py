@@ -24,6 +24,8 @@ import pandas as pd
 # Data Base Imports
 import sqlite3 as db
 
+# Get the running script path
+RUNNING_PATH = os.path.realpath(os.path.dirname(__file__)) 
 
 # Main Logger
 LOGHANDLER = None
@@ -46,27 +48,27 @@ def build_argparser():
         "--input_path",
         type=str,
         help="Path from where the data is ingested into the pipeline",
-        default='../../practicedata',
-        required=True)
+        default=os.path.join(RUNNING_PATH,'../../practicedata'),
+        required=False)
     parser.add_argument("-o",
                         "--output_file",
                         type=str,
                         help="File where the prepocessed data is stored",
-                        default='./finaldata.csv',
+                        default=os.path.join(RUNNING_PATH,'../../ingesteddata/finaldata.csv'),
                         required=False
                         )
     parser.add_argument("-r",
                         "--record_file",
                         type=str,
                         help="File where the ingested files names are recorded",
-                        default='./ingestedfiles.txt',
+                        default=os.path.join(RUNNING_PATH,'../../ingesteddata/ingestedfiles.txt'),
                         required=False
                         )
     parser.add_argument("-d",
                         "--db_file",
                         type=str,
                         help="File where db were the pipeline data is stored",
-                        default='./pipeline_data.sqlite',
+                        default=os.path.join(RUNNING_PATH,'../../db/pipeline_data.sqlite'),
                         required=False
                         )
 

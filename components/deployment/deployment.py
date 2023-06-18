@@ -16,6 +16,10 @@ import logging.handlers
 import sys
 import os
 import platform
+import shutil
+
+# Get the running script path
+RUNNING_PATH = os.path.realpath(os.path.dirname(__file__)) 
 
 # Main Logger
 LOGHANDLER = None
@@ -34,17 +38,24 @@ def build_argparser():
                             description="Model Deployment")
     parser.add_argument("-m",
         "--model_path", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
-        default=## INSERT DEFAULT VALUE HERE,
-        required=True
+        type=str,
+        help="Model Files Path",
+        default=os.path.join(RUNNING_PATH,'../../practicemodels'),
+        required=False
+    )
+    parser.add_argument("-i",
+        "--ingested_files", 
+        type=str,
+        help="Ingested files record",
+        default=os.path.join(RUNNING_PATH,'../../ingesteddata/ingestedfiles.txt'),
+        required=False
     )
     parser.add_argument("-d",
         "--deploy_path", 
-        type=## INSERT TYPE HERE: str, float or int,
-        help=## INSERT DESCRIPTION HERE,
-        default=## INSERT DEFAULT VALUE HERE,
-        required=True
+        type=str,
+        help="Production Deployment Path ",
+        default=os.path.join(RUNNING_PATH,'../../production_deployment'),
+        required=False
     )
 
     return parser.parse_args()
@@ -59,9 +70,24 @@ def main(args):
 
     global LOGGER
 
-    ######################
-    # YOUR CODE HERE     #
-    ######################
+    # get files on model_path
+    files = os.listdir(args.model_path)
+    files = [os.path.join(args.model_path, f) for f in os.listdir(args.model_path)
+            if os.path.isfile(os.path.join(args.model_path, f))
+            and (f.endswith(".txt") or f.endswith(".pkl") )  ]
+    files.append(args.ingested_files)
+    # Clean deploy path
+    if os.path.exists(args.deploy_path):
+        shutil.rmtree(args.deploy_path)
+    os.mkdir(args.deploy_path)
+    # Move files ot deploy path
+    for file in files:
+        try:
+            shutil.move(file, args.deploy_path)
+        except Exception as err:
+                LOGGER.error(f"Coping File {file} error (001)\n{err}")
+        else:
+            LOGGER.info(f"File {file} copied")
 
 
 if __name__ == '__main__':
