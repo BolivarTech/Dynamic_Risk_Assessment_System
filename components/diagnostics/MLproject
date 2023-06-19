@@ -11,10 +11,15 @@ entry_points:
   main:
     parameters:
 
-      deploy_path:
-        description: "Path to deploymed model"
+      model_path:
+        description: "Path to deploymed model file"
         type: string
-        default: ../../production_deployment
+        default: ../../production_deployment/trainedmodel.pkl
+
+      test_path:
+        description: "Path to test data file"
+        type: string
+        default: ../../testdata/testdata.csv
 
       output_path:
         description: "Path where the report is saved"
@@ -24,8 +29,9 @@ entry_points:
       db_path:
         description: "Database path"
         type: string
-        default: ../../db
+        default: ../../db/pipeline_data.sqlite
 
 
     command: >-
-        python diagnostics.py -p {deploy_path} -o {output_path} -d {db_path} 
+        python diagnostics.py -m {model_path} -t {test_path} \
+                              -o {output_path} -d {db_path} 
