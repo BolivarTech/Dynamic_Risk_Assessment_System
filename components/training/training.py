@@ -108,7 +108,7 @@ def train_model(args):
             conn.close()
             LOGGER.debug(f"Connection Closed (007)")
     else:
-        LOGGER.error(f"Can't connect with {args.output_file} (008)")
+        LOGGER.error(f"Can't connect with {args.db_file} (008)")
 
     X,y = segregate_dataset(dataset)
     
