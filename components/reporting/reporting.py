@@ -125,6 +125,7 @@ def score_model(args):
     # write the confusion matrix to the workspace
     model_output_path = os.path.realpath(os.path.dirname(args.model_file))
     savepath = os.path.join(model_output_path,'confusionmatrix.png')
+    LOGGER.info(f"Confution matrix saved on {savepath} (001)")
     f.savefig(savepath)
 
     # Additional Statistics

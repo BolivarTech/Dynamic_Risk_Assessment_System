@@ -1,0 +1,1 @@
+*/10 * * * * /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/cron_run.sh
