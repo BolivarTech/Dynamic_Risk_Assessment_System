@@ -25,6 +25,9 @@ from sklearn.linear_model import LogisticRegression
 # Data Base Imports
 import sqlite3 as db
 
+# Get the running script's path
+RUNNING_PATH = os.path.realpath(os.path.dirname(__file__)) 
+
 # Main Logger
 LOGHANDLER = None
 LOGGER = None
@@ -44,13 +47,13 @@ def build_argparser():
                         "--db_file", 
                         type=str,
                         help="Data ingested database",
-                        default='../../db/pipeline_data.sqlite',
+                        default=os.path.join(RUNNING_PATH,'../../db/pipeline_data.sqlite'),
                         required=False)
     parser.add_argument("-o",
                         "--model_path", 
                         type=str,
                         help="Model save path",
-                        default="../../practicemodels",
+                        default=os.path.join(RUNNING_PATH,'../../practicemodels'),
                         required=False)
 
     return parser.parse_args()

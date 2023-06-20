@@ -1,0 +1,33 @@
+2023/06/19 20:43:18 - ingestion - INFO: Files Found In: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata (010)
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset1.csv
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset2.csv
+2023/06/19 20:43:18 - ingestion - INFO: Duplicated Removed: 10 (001)
+2023/06/19 20:43:18 - ingestion - INFO: Database Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (002)
+2023/06/19 20:43:18 - ingestion - INFO: Ingested Data table created into /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (003)
+2023/06/19 20:43:18 - ingestion - INFO: Ingested Files table created into /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (004)
+2023/06/19 20:43:18 - ingestion - INFO: Cleaned Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../ingesteddata/finaldata.csv (009)
+2023/06/19 20:43:18 - ingestion - INFO: Ingested Files: (003)
+ /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset1.csv
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset2.csv
+2023/06/19 20:45:45 - ingestion - INFO: Files Found In: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata (010)
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset1.csv
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset2.csv
+2023/06/19 20:45:45 - ingestion - INFO: Duplicated Removed: 10 (001)
+2023/06/19 20:45:45 - ingestion - INFO: Database Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (002)
+2023/06/19 20:45:45 - ingestion - INFO: Ingested Data table created into /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (003)
+2023/06/19 20:45:45 - ingestion - INFO: Ingested Files table created into /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (004)
+2023/06/19 20:45:45 - ingestion - INFO: Cleaned Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../ingesteddata/finaldata.csv (009)
+2023/06/19 20:45:45 - ingestion - INFO: Ingested Files: (003)
+ /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset1.csv
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset2.csv
+2023/06/19 20:49:25 - ingestion - INFO: Files Found In: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata (010)
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset1.csv
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset2.csv
+2023/06/19 20:49:25 - ingestion - INFO: Duplicated Removed: 10 (001)
+2023/06/19 20:49:25 - ingestion - INFO: Database Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (002)
+2023/06/19 20:49:25 - ingestion - INFO: Ingested Data table created into /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (003)
+2023/06/19 20:49:25 - ingestion - INFO: Ingested Files table created into /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../db/pipeline_data.sqlite (004)
+2023/06/19 20:49:25 - ingestion - INFO: Cleaned Data File: /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../ingesteddata/finaldata.csv (009)
+2023/06/19 20:49:25 - ingestion - INFO: Ingested Files: (003)
+ /home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset1.csv
+/home/jbolivarg/udacity/Dynamic_Risk_Assessment_System/components/ingestion/../../practicedata/dataset2.csv

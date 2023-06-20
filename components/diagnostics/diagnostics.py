@@ -91,16 +91,18 @@ def build_argparser():
     return parser.parse_args()
 
 
-def model_predictions(model_path, test_data_path, db_path):
+def model_predictions(model_path, test_data_path, db_path, LOGGER_=LOGGER):
     """
     read the deployed model and a test dataset, calculate predictions F1 Score
     and estor it on the database
     
-    :param model_path: (str) current state
+    :param model_path: (str) Model to be tested
     :param test_data_path: (str) Add noise using the epsilon-greedy policy
     :param db_path: (str) Add noise using the epsilon-greedy policy
+    :param LOGGER_: System Log manager
     :return: list of predictions from deployed model
     """
+
     # load test dataset
     dataset = pd.read_csv(test_data_path)
 
@@ -116,7 +118,7 @@ def model_predictions(model_path, test_data_path, db_path):
 
     # Verify data input and output length
     if len(yhat) != len(y):
-        LOGGER.error(f"length for input ({len(y)}) and output ({len(yhat)}) must be the same (001)")
+        LOGGER_.error(f"length for input ({len(y)}) and output ({len(yhat)}) must be the same (001)")
     assert len(yhat) == len(y), "length for input and output must be the same"
     
     # Score model on test set
@@ -125,7 +127,7 @@ def model_predictions(model_path, test_data_path, db_path):
     # upate score table
     #connect to a database, creating it if it doesn't exist 
     conn = db.connect(db_path)
-    LOGGER.info(f"Database Data File: {db_path} (001)")
+    LOGGER_.info(f"Database Data File: {db_path} (001)")
     if conn is not None:
         try: 
             # get current time
@@ -135,52 +137,52 @@ def model_predictions(model_path, test_data_path, db_path):
             scores_df = pd.DataFrame(score_reg)
             # Save score record into database
             scores_df.to_sql("model_test_score", conn, if_exists='append', index=False)
-            LOGGER.info(f"Score recorded in 'model_score' table into {db_path} (001)")
+            LOGGER_.info(f"Score recorded in 'model_score' table into {db_path} (001)")
         except ValueError as err:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't update table 'model_test_score' in {db_path} (001)\n{err}")
+            LOGGER_.error(f"Can't update table 'model_test_score' in {db_path} (001)\n{err}")
         else:
             # commit the transaction
             conn.commit()
-            LOGGER.debug(f"Transactions commited (001)")
+            LOGGER_.debug(f"Transactions commited (001)")
         finally:
             # close out the connection
             conn.close()
-            LOGGER.debug(f"Connection Closed (001)")
+            LOGGER_.debug(f"Connection Closed (001)")
     else:
-        LOGGER.error(f"Can't connect with {db_path} (001)")
+        LOGGER_.error(f"Can't connect with {db_path} (001)")
 
     return yhat
 
 
-def dataframe_summary(db_path):
+def dataframe_summary(db_path, LOGGER_=LOGGER):
     """
     Calculate summary statistics on the dataset columns
 
     :param db_path: (str) Add noise using the epsilon-greedy policy
-
+    :param LOGGER_: System Log manager
     :return: list with dataframe's means, medians and stddevs 
     """
 
     #connect to a database, creating it if it doesn't exist 
     conn = db.connect(db_path)
-    LOGGER.info(f"Database Data File: {db_path} (002)")
+    LOGGER_.info(f"Database Data File: {db_path} (002)")
 
     if conn is not None:
         try: 
             dataset = pd.read_sql_query("select * from ingested_data",conn)
-            LOGGER.info(f"Ingested Data table loaded from {db_path} (003)")  
+            LOGGER_.info(f"Ingested Data table loaded from {db_path} (003)")  
         except ValueError:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't read table 'ingested_data' in {db_path} (005)")
+            LOGGER_.error(f"Can't read table 'ingested_data' in {db_path} (005)")
         finally:
             # close out the connection
             conn.close()
-            LOGGER.debug(f"Connection Closed (007)")
+            LOGGER_.debug(f"Connection Closed (007)")
     else:
-        LOGGER.error(f"Can't connect with {db_path} (008)")
+        LOGGER_.error(f"Can't connect with {db_path} (008)")
 
     # Select numeric columns
     numeric_col_index = np.where(dataset.dtypes != object)[0]
@@ -198,34 +200,34 @@ def dataframe_summary(db_path):
     return statistics
 
 
-def missing_data(db_path):
+def missing_data(db_path, LOGGER_=LOGGER):
     """
     calculate missing data on the dataset
     return % of missing data per column
 
     :param db_path: (str) Add noise using the epsilon-greedy policy
-
+    :param LOGGER_: System Log manager
     :return: list with dataframe's % missing data per column 
     """
 
     #connect to a database, creating it if it doesn't exist 
     conn = db.connect(db_path)
-    LOGGER.info(f"Database Data File: {db_path} (002)")
+    LOGGER_.info(f"Database Data File: {db_path} (002)")
 
     if conn is not None:
         try: 
             dataset = pd.read_sql_query("select * from ingested_data",conn)
-            LOGGER.info(f"Ingested Data table loaded from {db_path} (003)")  
+            LOGGER_.info(f"Ingested Data table loaded from {db_path} (003)")  
         except ValueError:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't read table 'ingested_data' in {db_path} (005)")
+            LOGGER_.error(f"Can't read table 'ingested_data' in {db_path} (005)")
         finally:
             # close out the connection
             conn.close()
-            LOGGER.debug(f"Connection Closed (007)")
+            LOGGER_.debug(f"Connection Closed (007)")
     else:
-        LOGGER.error(f"Can't connect with {db_path} (008)")
+        LOGGER_.error(f"Can't connect with {db_path} (008)")
 
     # compute missing data % per column
     missing_data = dataset.isna().sum(axis=0)
@@ -296,7 +298,8 @@ def outdated_packages_list():
     df1 = df1.rename(columns = {'Version':'Latest'})
 
     # collect dependencies as per requirements.txt file
-    requirements = pd.read_csv('requirements.txt', sep='==', header=None, names=['Package','Version'], engine='python')
+    requirements_file = os.path.join(RUNNING_PATH,'../requirements.txt')
+    requirements = pd.read_csv(requirements_file, sep='==', header=None, names=['Package','Version'], engine='python')
     requirements = requirements.set_index('Package')
 
     # assemble target and latest versions for requirements.txt dependencies
@@ -320,9 +323,9 @@ def main(args):
 
     global LOGGER
 
-    _ = model_predictions(args.model_path, args.test_data_file, args.db_path)
-    _ = dataframe_summary(args.db_path)
-    _ = missing_data(args.db_path)
+    _ = model_predictions(args.model_path, args.test_data_file, args.db_path, LOGGER)
+    _ = dataframe_summary(args.db_path, LOGGER)
+    _ = missing_data(args.db_path, LOGGER)
     _ = execution_time()
     _ = outdated_packages_list()
 

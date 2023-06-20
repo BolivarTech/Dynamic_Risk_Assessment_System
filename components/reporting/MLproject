@@ -1,0 +1,31 @@
+##########################
+# MLflow pipeline reporting step
+# Author: Julian Bolivar
+# Date: 2023/06/18
+# Version: 1.0.0
+##########################
+name: reporting
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      test_data_file:
+        description: "Test data file"
+        type: string
+        default: ../../testdata/testdata.csv
+
+      model_file:
+        description: "Model file"
+        type: string,
+        default: ../../production_deployment/trainedmodel.pkl
+
+      db_file:
+        description: "Database file"
+        type: string,
+        default: ../../db/pipeline_data.sqlite
+
+    command: >-
+        python reporting.py -t {test_data_file} -m {model_file} \
+                            -d {db_file} 

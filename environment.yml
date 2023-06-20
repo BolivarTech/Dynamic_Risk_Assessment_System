@@ -23,6 +23,7 @@ dependencies:
   - statsmodels=0.13.5
   - matplotlib=3.7.1
   - pillow=9.5.0
+  - seaborn=0.12.2
 # Test Driven Developmnet (TDD)
   - pytest=7.3.1
 # Style enforcement packets
