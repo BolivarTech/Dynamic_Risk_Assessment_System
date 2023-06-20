@@ -1,0 +1,26 @@
+##########################
+# MLflow pipeline app step
+# Author: Julian Bolivar
+# Date: 2023/06/20
+# Version: 1.0.0
+##########################
+name: app
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      address:
+        description: "Listening IP address"
+        type: string
+        default: 0.0.0.0
+
+      port:
+        description: "Port where listening"
+        type: string
+        default: 8000
+
+
+    command: >-
+        python app.py -a {address} -p {port} 

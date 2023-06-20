@@ -278,7 +278,7 @@ def execute_cmd(cmd):
     df = df.set_index('Package')
     return df
 
-##################Function to check dependencies
+
 def outdated_packages_list():
     """get a list of dependencies and versions
     :inputs: None

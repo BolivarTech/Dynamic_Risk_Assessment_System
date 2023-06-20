@@ -1,0 +1,23 @@
+##########################
+# Conda environment for app step
+# Author: Julian Bolivar
+# Date: 2023/06/20
+# Version: 1.0.0
+##########################
+name: app
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+# main system packets
+  - python=3.8.16
+  - mlflow=2.4.0
+  - pip>=23.1.2
+# API packets
+  - requests=2.31.0
+  - flask=2.3.2
+  - pyyaml=6.0
+# data science packets
+  - numpy=1.24.3
+  - pandas=2.0.1
+  - scikit-learn=1.2.2

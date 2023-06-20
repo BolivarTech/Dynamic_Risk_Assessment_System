@@ -79,26 +79,26 @@ def build_argparser():
     return parser.parse_args()
 
 
-def score_model(args):
+def score_model(data_test_file, model_file, db_file, LOGGER_=LOGGER):
     """
     Perform the F1 model scoring using the test data and save it on the db table
     'model_scores' and the last one is stored at the model's path in the
     'latestscore.txt' file.
 
-    inputs:
-        args [dict]: parsed system arguments
-
-    outputs:
-       none 
+    :param data_test_file: file with the test data set
+    :param model_file: model file
+    :param db_file: DB file
+    :param LOGGER_: System Log manager
+    :return: none 
     """
 
     # import test dataset from csv file
-    testdata = pd.read_csv(args.data_test_file)
+    testdata = pd.read_csv(data_test_file)
 
     # load trained model    
-    with open(args.model_file, 'rb') as file:
+    with open(model_file, 'rb') as file:
         model = pickle.load(file)
-        LOGGER.info(f"Model {args.model_file} loaded (001)")
+        LOGGER_.info(f"Model {model_file} loaded (001)")
 
     # segregate test dataset
     X, y = segregate_dataset(testdata)
@@ -109,8 +109,8 @@ def score_model(args):
 
     # upate score table
     #connect to a database, creating it if it doesn't exist 
-    conn = db.connect(args.db_file)
-    LOGGER.info(f"Database Data File: {args.db_file} (001)")
+    conn = db.connect(db_file)
+    LOGGER_.info(f"Database Data File: {db_file} (001)")
     if conn is not None:
         try: 
             # get current time
@@ -120,26 +120,28 @@ def score_model(args):
             scores_df = pd.DataFrame(score_reg)
             # Save score record into database
             scores_df.to_sql("model_score", conn, if_exists='append', index=False)
-            LOGGER.info(f"Score recorded in 'model_score' table into {args.db_file} (001)")
+            LOGGER_.info(f"Score recorded in 'model_score' table into {db_file} (001)")
         except ValueError as err:
             # if exception occour Rollback
             conn.rollback()
-            LOGGER.error(f"Can't update table 'model_score' in {args.db_file} (001)\n{err}")
+            LOGGER_.error(f"Can't update table 'model_score' in {db_file} (001)\n{err}")
         else:
             # commit the transaction
             conn.commit()
-            LOGGER.debug(f"Transactions commited (001)")
+            LOGGER_.debug(f"Transactions commited (001)")
         finally:
             # close out the connection
             conn.close()
-            LOGGER.debug(f"Connection Closed (001)")
+            LOGGER_.debug(f"Connection Closed (001)")
     else:
-        LOGGER.error(f"Can't connect with {args.output_file} (001)")
+        LOGGER_.error(f"Can't connect with {db_file} (001)")
 
     # save as latest score on file
-    scorespath = os.path.join(os.path.realpath(os.path.dirname(args.model_file)), 'latestscore.txt')
+    scorespath = os.path.join(os.path.realpath(os.path.dirname(model_file)), 'latestscore.txt')
     with open(scorespath, 'w') as file:
         file.write(str(score))
+
+    return score
 
 
 def main(args):
@@ -151,7 +153,7 @@ def main(args):
 
     global LOGGER
 
-    score_model(args)
+    _ = score_model(args.data_test_file, args.model_file, args.db_file, LOGGER_=LOGGER)
 
 
 if __name__ == '__main__':
