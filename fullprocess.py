@@ -36,7 +36,6 @@ def build_argparser():
     parser = ArgumentParser(prog="fullprocess",
                             description="ML monitoring ")
 
-
     parser.add_argument(
         "--parameter1", 
         type=## INSERT TYPE HERE: str, float or int,
@@ -53,8 +52,16 @@ def build_argparser():
         required=True
     )
 
-
     return parser.parse_args()
+
+
+
+
+
+
+
+
+
 
 
 def main(args):
