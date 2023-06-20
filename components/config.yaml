@@ -1,3 +1,5 @@
+main:
+    steps: all
 ingestion:
     input_folder_path: ../practicedata
     output_folder_path: ../ingesteddata

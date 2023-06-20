@@ -12,7 +12,7 @@ entry_points:
     parameters:
 
       steps:
-        description: Comma-separated list of steps to execute (useful for debugging)
+        description: Comma-separated list of steps to execute on this order
         type: str
         default: all
 
