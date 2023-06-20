@@ -31,7 +31,7 @@ RUNNING_PATH = os.path.realpath(os.path.dirname(__file__))
 # Main Logger
 LOGHANDLER = None
 LOGGER = None
-LOGLEVEL_ = logging.INFO
+LOGLEVEL_ = logging.DEBUG # .INFO
 
 
 def build_argparser():
@@ -120,9 +120,10 @@ def train_model(args):
     
     # write the trained model to your workspace in a file called trainedmodel.pkl
     savingpath = os.path.join(args.model_path,'trainedmodel.pkl')
+    LOGGER.debug(f"Model will be saved at {savingpath} (008)")
     with open(savingpath, 'wb') as file:
         pickle.dump(model, file)
-
+        LOGGER.info(f"Model saved on {savingpath} (008)")
 
 def main(args):
     """
