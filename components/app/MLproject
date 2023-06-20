@@ -24,3 +24,7 @@ entry_points:
 
     command: >-
         python app.py -a {address} -p {port} 
+
+  apicalls:
+    command: >-
+        python apicalls.py 
