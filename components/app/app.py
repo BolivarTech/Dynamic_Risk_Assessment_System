@@ -21,7 +21,7 @@ import platform
 import pandas as pd
 
 # API imports
-from flask import Flask, session, jsonify, request
+from flask import Flask, session, jsonify, request, send_from_directory
 
 # Yaml file manager
 import yaml
@@ -54,6 +54,7 @@ with open(os.path.join(RUNNING_PATH,'..','config.yaml')) as file:
 dataset_csv_path = os.path.join(RUNNING_PATH,'..',config['ingestion']['output_folder_path']) 
 db_file = os.path.join(RUNNING_PATH,'..',config['database']['database_folder_path'],'pipeline_data.sqlite')
 model_file = os.path.join(RUNNING_PATH,'..',config['production']['prod_deployment_path'],'trainedmodel.pkl')
+report_path = os.path.join(RUNNING_PATH,'..',config['production']['prod_deployment_path'])
 
 prediction_model = None
 
@@ -141,6 +142,11 @@ def get_diagnostics():
                                 'Vlatest':row[1][1]} 
                                 for row in dependency_check.iterrows()]
             }
+
+
+@app.route('/download', methods=['GET', 'OPTIONS'])
+def download():
+    return send_from_directory(directory=report_path, path='report.pdf')
 
 
 def main(args):
